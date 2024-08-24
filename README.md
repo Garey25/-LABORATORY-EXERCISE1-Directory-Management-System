@@ -1,4 +1,4 @@
-#include <isotream>
+include <isotream>
 #include <flesystem>
 #include <string>
 
@@ -15,8 +15,13 @@ void createDirectory(const fs::paths path){
 } else {
   std::cout << "Failed to create directory:" << path << std::end1:
  } 
- 
 }  
+
+void changedirectory 9fs:paths currentPath){
+ if(fs:create_directory(path)){
+  std;;string new path
+  std::cout << "Enter new directory path:";
+  std::cin >> newPath
   
  
  
