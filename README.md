@@ -1,93 +1,88 @@
-include <iostream>
-#include <flesystem>
 #include <string>
+#include <iostream>
+#include <cstdio>     
+#include <cstdlib>    
+#include <direct.h>   
+#include <windows.h>  
 
-namespace fs = std::filesystem;
-void listFiles(cons fs:::path){
- for (const auto& entry : fs::directory_interator(path)){
-  std::cout << entry.path()filename().string() << std::end1;
- }
+void displayFiles() {
+    system("dir");  
+    system("pause");
 }
 
-void createDirectory(const fs::paths path){
- if (fs::create_directory (path)){
-  std::cout << "Directory created:" << path << std::end1;
-} else {
-  std::cout << "Failed to create directory:" << path << std::end1:
- } 
-}  
+void createDirectory() {
+    std::cout << "\nEnter the Directory name: ";
+    std::string dirName;
+    std::cin >> dirName;
 
-void changeDirectory fs:paths currentPath){
- if(fs::create_directory(path)){
-  std::string new path;
-  std::cout << "Enter new directory path:";
-  std::cin >> newPath
- if (fs::exists (newPath) && fs::is_directory(newPath)) {
-   currentPath = newPath;
+    if (_mkdir(dirName.c_str()) == 0) {
+        std::cout << "\nDirectory '" << dirName << "' Successfully Created\n";
+    } else {
+        std::cout << "\nFailed to Create Directory '" << dirName << "'\n";
+    }
 
- std::cout << "Changed directory to: <<     currentPath << std::endl;
-
-} else {
-
- std::cout << "Invalid directory path." <<  std::endl;
-
- }
-
-} 
-
-void changeDirectory(fs::path & currentPath){
- std::string newPath;
- std::cout << "Directory created:";
- std::cin >> newPath;
- if(fs::exist(newPath)&& fs::is_Directory(newPath)){
-   currentPath = newPath;
- std::cout << "Change directory to:" << currentPath << std::end1:
-} else{
- std::cout << "Invalid directory path." << std::end;
-
- }
+    system("pause");
 }
 
-int main(){
- fs::path currentPath = fs:current_path();
-  int choice;
+void changeDirectory() {
+    char currentDir[FILENAME_MAX];
+    _getcwd(currentDir, sizeof(currentDir));
+    std::cout << "\nCurrent Directory: " << currentDir << '\n';
 
- do{
-  std::cout << "\nDireectory Management system\";
-  std::cout << "1. List files"\;
-  std::cout << "2. Create directory\";
-  std::cout << "3. Change current directory\";
-  std::cout << "4. Exit\";
-  std::cout << "Current Directory" << currentPath << "\n";
-  std::cout << "Enter your choice";
-  std::cin >> choice;
+    std::cout << "1. Step by Step Backward\n";
+    std::cout << "2. Goto Root Directory\n";
+    std::cout << "3. Forward Directory\n";
+    std::cout << "Enter the Number: ";
+    int choice;
+    std::cin >> choice;
 
-switch (choice){
- case 1:
-  listFiles(currentPath);
-  break;
- case 2:{
- std::string dirName;
- std::cout << "Enter directory name:";
- std::cin >> dirName;
- createDirectory(currentPath / dirName);
- break;
+    if (choice == 1) {
+        _chdir("..");
+    } else if (choice == 2) {
+        _chdir("\\");
+    } else if (choice == 3) {
+        std::cout << "Enter the Directory Name: ";
+        std::string dirName;
+        std::cin >> dirName;
+        _chdir(dirName.c_str());
+    }
+
+    _getcwd(currentDir, sizeof(currentDir));
+    std::cout << "Current Directory: " << currentDir << '\n';
+    system("pause");
 }
- case 3:
-  changeDirectory(currentPath);
-  break;
- case4:
-  std::cout << "exiting...\n";
-  break;
- default:
-  std::cout << :invalid choice. Please try again.\n";
- }
-} while (choice != 4);
 
-return 0,
- 
+int main() {
+    int choice;
+    do {
+        system("cls");
+        std::cout << "1. To Display List of Files\n";
+        std::cout << "2. To Create New Directory\n";
+        std::cout << "3. To Change the Working Directory\n";
+        std::cout << "4. Exit\n";
+        std::cout << "Enter the Number: ";
+        std::cin >> choice;
 
- 
+        switch (choice) {
+            case 1:
+                displayFiles();
+                break;
+            case 2:
+                createDirectory();
+                break;
+            case 3:
+                changeDirectory();
+                break;
+            case 4:
+                std::cout << "Exiting...\n";
+                break;
+            default:
+                std::cout << "Invalid option! Please try again.\n";
+                system("pause");
+                break;
+        }
+    } while (choice != 4);
 
- 
+    return 0;
+}
  
